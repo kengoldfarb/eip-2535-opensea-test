@@ -30,8 +30,10 @@ contract ERC721Facet is IERC721, IERC721Enumerable {
      */
     function supportsInterface(bytes4 interfaceId) public view virtual override(IERC165) returns (bool) {
         return
+            interfaceId == type(IERC165).interfaceId ||
             interfaceId == type(IERC721).interfaceId ||
-            interfaceId == type(IERC721Metadata).interfaceId;
+            interfaceId == type(IERC721Metadata).interfaceId ||
+			interfaceId == type(IERC721Enumerable).interfaceId;
     }
 
     /**
