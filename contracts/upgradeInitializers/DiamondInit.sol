@@ -34,7 +34,7 @@ contract DiamondInit {
         ds.supportedInterfaces[type(IERC173).interfaceId] = true;
         ds.supportedInterfaces[type(IERC721).interfaceId] = true;
 
-        s.name = "Diamond OpenSea Test";
+        s.name = "DiamondOpenSeaTest";
         s.symbol = "DSEA";
 
         // add your own state variables

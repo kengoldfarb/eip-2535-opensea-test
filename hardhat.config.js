@@ -1,6 +1,8 @@
 
 /* global ethers task */
 require('@nomiclabs/hardhat-waffle')
+require('@nomiclabs/hardhat-etherscan')
+require('hardhat-contract-sizer')
 
 const { deployDiamond } = require('./scripts/deploy.js')
 
@@ -27,11 +29,13 @@ task('deploy', 'Prints the list of accounts', async () => {
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-  solidity: '0.8.6',
-  settings: {
-    optimizer: {
-      enabled: true,
-      runs: 200
+  solidity: {
+    version: '0.8.4',
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 10000
+      }
     }
   },
   networks: {
@@ -40,6 +44,17 @@ module.exports = {
 			accounts: process.env.TESTNET_MNEMONIC
 				? { mnemonic: process.env.TESTNET_MNEMONIC }
 				: [process.env.TESTNET_WALLET_PRIVATE_KEY].filter(Boolean)
-		}
-  }
+		},
+    mumbai: {
+			url: 'https://rpc-mumbai.maticvigil.com',
+			chainId: 80001,
+			gasPrice: 10000000000,
+			accounts: process.env.TESTNET_MNEMONIC
+				? { mnemonic: process.env.TESTNET_MNEMONIC }
+				: [process.env.TESTNET_WALLET_PRIVATE_KEY].filter(Boolean)
+		},
+  },
+  etherscan: {
+		apiKey: process.env.ETHERSCAN_API_KEY
+	}
 }

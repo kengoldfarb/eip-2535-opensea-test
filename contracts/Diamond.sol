@@ -10,10 +10,13 @@ pragma solidity ^0.8.0;
 
 import { LibDiamond } from "./libraries/LibDiamond.sol";
 import { IDiamondCut } from "./interfaces/IDiamondCut.sol";
+// import {ERC721} from '@openzeppelin/contracts/token/ERC721/ERC721.sol';
+// import {ERC721Enumerable} from '@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol';
+import {ERC721Tradable} from './interfaces/ERC721Tradable.sol';
 
-contract Diamond {    
+contract Diamond is ERC721Tradable {
 
-    constructor(address _contractOwner, address _diamondCutFacet) payable {        
+    constructor(address _contractOwner, address _diamondCutFacet) payable ERC721Tradable('DiamondOpenSeaTest', 'DSEA', 0xF57B2c51dED3A29e6891aba85459d600256Cf317) {
         LibDiamond.setContractOwner(_contractOwner);
 
         // Add the diamondCut external function from the diamondCutFacet
@@ -21,11 +24,11 @@ contract Diamond {
         bytes4[] memory functionSelectors = new bytes4[](1);
         functionSelectors[0] = IDiamondCut.diamondCut.selector;
         cut[0] = IDiamondCut.FacetCut({
-            facetAddress: _diamondCutFacet, 
-            action: IDiamondCut.FacetCutAction.Add, 
+            facetAddress: _diamondCutFacet,
+            action: IDiamondCut.FacetCutAction.Add,
             functionSelectors: functionSelectors
         });
-        LibDiamond.diamondCut(cut, address(0), "");        
+        LibDiamond.diamondCut(cut, address(0), "");
     }
 
     // Find facet for function that is called and execute the
@@ -60,4 +63,27 @@ contract Diamond {
     }
 
     receive() external payable {}
+
+    // function _beforeTokenTransfer(address from, address to, uint256 tokenId) internal override(ERC721, ERC721Enumerable) {
+    //     super._beforeTokenTransfer(from, to, tokenId);
+    // }
+
+    // function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721, ERC721Enumerable) returns (bool) {
+    //     return super.supportsInterface(interfaceId);
+    // }
+
+    function baseTokenURI() override public pure returns (string memory) {
+        return "https://creatures-api.opensea.io/api/creature/";
+    }
+
+    function contractURI() public pure returns (string memory) {
+        return "https://creatures-api.opensea.io/contract/opensea-creatures";
+    }
+
+    function mint(
+		address to,
+        uint256 tokenId
+	) public {
+        super._safeMint(to, tokenId);
+    }
 }
