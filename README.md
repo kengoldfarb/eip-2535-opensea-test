@@ -2,9 +2,116 @@
 
 This repo contains 2 branches that demonstrate an ERC-721 contract implemented using EIP-2535 only works on Opensea if the ERC-721 parts are not in a facet.
 
-Works on Opensea: [fix/opensea](https://github.com/kengoldfarb/eip-2535-opensea-test/tree/fix/opensea)
+## Works on Opensea:
 
-Doesn't work on Opensea: [fix/opensea-facet](https://github.com/kengoldfarb/eip-2535-opensea-test/tree/fix/opensea-facet)
+Branch: [fix/opensea](https://github.com/kengoldfarb/eip-2535-opensea-test/tree/fix/opensea)
+
+Opensea Collection: [https://testnets.opensea.io/collection/diamondopenseatest-v3](https://testnets.opensea.io/collection/diamondopenseatest-v3)
+
+Rinkeby Etherscan: [https://rinkeby.etherscan.io/address/0xc4A383d1Fd38EDe98F032759CE7Ed8f3F10c82B0](https://rinkeby.etherscan.io/address/0xc4A383d1Fd38EDe98F032759CE7Ed8f3F10c82B0)
+
+```
+╰─$ yarn hardhat deploy --network rinkeby
+yarn run v1.22.15
+DiamondCutFacet deployed: 0x7aA56375c7ff50B67344Ada96a977B62eE79881c
+Diamond deployed: 0xc4A383d1Fd38EDe98F032759CE7Ed8f3F10c82B0
+DiamondInit deployed: 0x4149Fcb0A1A6A5ECcB313bF76211f895BB4FA8Df
+
+Deploying facets
+DiamondLoupeFacet deployed: 0x745b4d28d17072C20034e8AeF06F1A3FAf9B8ba4
+
+Diamond Cut: [
+  {
+    facetAddress: '0x745b4d28d17072C20034e8AeF06F1A3FAf9B8ba4',
+    action: 0,
+    functionSelectors: [
+      '0xcdffacc6',
+      '0x52ef6b2c',
+      '0xadfca15e',
+      '0x7a0ed627',
+      contract: [Contract],
+      remove: [Function: remove],
+      get: [Function: get]
+    ]
+  }
+]
+Diamond cut tx:  0x77d1cfdf8cedf11098ba902e171ef5f297333ea1492a095c1bb69d93a52aeae9
+Completed diamond cut
+✨  Done in 65.26s.
+```
+
+## Doesn't work on Opensea:
+
+Branch: [fix/opensea-facet](https://github.com/kengoldfarb/eip-2535-opensea-test/tree/fix/opensea-facet)
+
+```
+╰─$ yarn hardhat deploy --network rinkeby
+yarn run v1.22.15
+DiamondCutFacet deployed: 0x366494606AfD8bE9D7188128EaBeA14ff2723129
+Diamond deployed: 0xDfAEF8281b4575ef5FcbfCb196Db35f8d19cD4b1
+DiamondInit deployed: 0x3bdebf0F3BC6D1c2885c6E58fF2706Af03829b9b
+
+Deploying facets
+DiamondLoupeFacet deployed: 0xdc7dcA1A2F457C83EA2D1cC24Beb6964ea0128e7
+ERC721Facet deployed: 0x48d38388b21e85237CCf2016c4848b9f78f51692
+
+Diamond Cut: [
+  {
+    facetAddress: '0xdc7dcA1A2F457C83EA2D1cC24Beb6964ea0128e7',
+    action: 0,
+    functionSelectors: [
+      '0xcdffacc6',
+      '0x52ef6b2c',
+      '0xadfca15e',
+      '0x7a0ed627',
+      contract: [Contract],
+      remove: [Function: remove],
+      get: [Function: get]
+    ]
+  },
+  {
+    facetAddress: '0x48d38388b21e85237CCf2016c4848b9f78f51692',
+    action: 0,
+    functionSelectors: [
+      '0x0f7e5970',
+      '0x095ea7b3',
+      '0x70a08231',
+      '0xd547cfb7',
+      '0xe8a3d485',
+      '0x0c53c51c',
+      '0x081812fc',
+      '0x3408e470',
+      '0x20379ee5',
+      '0x2d0335ab',
+      '0x1fe5b457',
+      '0xe985e9c5',
+      '0x40c10f19',
+      '0x755edd17',
+      '0x06fdde03',
+      '0x8da5cb5b',
+      '0x6352211e',
+      '0x715018a6',
+      '0x42842e0e',
+      '0xb88d4fde',
+      '0xa22cb465',
+      '0x01ffc9a7',
+      '0x95d89b41',
+      '0x4f6ccce7',
+      '0x2f745c59',
+      '0xc87b56dd',
+      '0x18160ddd',
+      '0x23b872dd',
+      '0xf2fde38b',
+      contract: [Contract],
+      remove: [Function: remove],
+      get: [Function: get]
+    ]
+  }
+]
+Diamond cut tx:  0x87f5f279b50c032c764828735d4ce264a296b6688213c7aa5b4f4643996021b3
+Completed diamond cut
+✨  Done in 237.83s.
+```
 
 ## Testing process
 
@@ -20,6 +127,7 @@ export TESTNET_WALLET_PRIVATE_KEY = ...
 * Open Console: npx hardhat console --network rinkeby
 * Console: `let d = await (await ethers.getContractFactory('Diamond')).attach('<Diamond address>')`
 * Console: `await d.mint('<Wallet address>', 0)`
+* Import collection into Opensea: [https://testnets.opensea.io/get-listed/step-two](https://testnets.opensea.io/get-listed/step-two)
 
 
 # Original Readme
