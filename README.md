@@ -44,6 +44,8 @@ Completed diamond cut
 
 Branch: [fix/opensea-facet](https://github.com/kengoldfarb/eip-2535-opensea-test/tree/fix/opensea-facet)
 
+Rinkeby Etherscan: [https://rinkeby.etherscan.io/address/0xDfAEF8281b4575ef5FcbfCb196Db35f8d19cD4b1](https://rinkeby.etherscan.io/address/0xDfAEF8281b4575ef5FcbfCb196Db35f8d19cD4b1)
+
 ```
 ╰─$ yarn hardhat deploy --network rinkeby
 yarn run v1.22.15
