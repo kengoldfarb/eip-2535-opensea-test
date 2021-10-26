@@ -2,6 +2,8 @@
 
 This repo contains 2 branches that demonstrate an ERC-721 contract implemented using EIP-2535 only works on Opensea if the ERC-721 parts are not in a facet.
 
+Comparison between branches: [https://github.com/kengoldfarb/eip-2535-opensea-test/compare/fix/opensea...fix/opensea-facet](https://github.com/kengoldfarb/eip-2535-opensea-test/compare/fix/opensea...fix/opensea-facet)
+
 ## Works on Opensea:
 
 Branch: [fix/opensea](https://github.com/kengoldfarb/eip-2535-opensea-test/tree/fix/opensea)
