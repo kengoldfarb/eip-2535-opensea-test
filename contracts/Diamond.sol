@@ -10,9 +10,8 @@ pragma solidity ^0.8.0;
 
 import { LibDiamond } from "./libraries/LibDiamond.sol";
 import { IDiamondCut } from "./interfaces/IDiamondCut.sol";
-import {ERC721Facet} from './facets/ERC721Facet.sol';
 
-contract Diamond is ERC721Facet {
+contract Diamond {
 
     constructor(address _contractOwner, address _diamondCutFacet) payable {
         LibDiamond.setContractOwner(_contractOwner);

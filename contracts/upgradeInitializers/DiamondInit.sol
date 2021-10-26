@@ -15,6 +15,7 @@ import { IDiamondCut } from "../interfaces/IDiamondCut.sol";
 import { IERC173 } from "../interfaces/IERC173.sol";
 import { IERC165 } from "../interfaces/IERC165.sol";
 import { IERC721 } from "../interfaces/IERC721.sol";
+import {ERC721MetadataStorage} from '@solidstate/contracts/token/ERC721/metadata/ERC721MetadataStorage.sol';
 
 // It is exapected that this contract is customized if you want to deploy your diamond
 // with data from a deployment script. Use the init function to initialize state variables
@@ -40,9 +41,11 @@ contract DiamondInit {
         // These arguments are used to execute an arbitrary function using delegatecall
         // in order to set state variables in the diamond during deployment or an upgrade
         // More info here: https://eips.ethereum.org/EIPS/eip-2535#diamond-interface
-        s.name = "DiamondOpenSeaTest";
-        s.symbol = "DSEA";
+        ERC721MetadataStorage.Layout storage l = ERC721MetadataStorage.layout();
+        l.baseURI = 'https://creatures-api.opensea.io/api/creature/';
+        l.name = "DiamondOpenSeaTest";
+        l.symbol = "DSEA";
         // Opensea Rinkeby address
-        s.proxyRegistryAddress = 0xF57B2c51dED3A29e6891aba85459d600256Cf317;
+        // s.proxyRegistryAddress = 0xF57B2c51dED3A29e6891aba85459d600256Cf317;
     }
 }
