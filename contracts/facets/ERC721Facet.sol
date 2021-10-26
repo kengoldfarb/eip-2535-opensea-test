@@ -13,4 +13,10 @@ contract ERC721Facet is ERC721 {
 	) public {
         super._safeMint(to, tokenId);
     }
+
+    // This implements ERC-165.
+    function supportsInterface(bytes4 _interfaceId) external override view returns (bool) {
+        LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage();
+        return ds.supportedInterfaces[_interfaceId];
+    }
 }
