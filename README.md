@@ -1,3 +1,28 @@
+# Diamond Opensea Test
+
+This repo contains 2 branches that demonstrate an ERC-721 contract implemented using EIP-2535 only works on Opensea if the ERC-721 parts are not in a facet.
+
+Works on Opensea: [fix/opensea](https://github.com/kengoldfarb/eip-2535-opensea-test/tree/fix/opensea)
+
+Doesn't work on Opensea: [fix/opensea-facet](https://github.com/kengoldfarb/eip-2535-opensea-test/tree/fix/opensea-facet)
+
+## Testing process
+
+Set up your env
+
+```
+export INFURA_PROJECT_ID = ...
+export TESTNET_WALLET_PRIVATE_KEY = ...
+```
+
+* Compile contracts: npx hardhat compile
+* Deploy contracts: npx hardhat deploy --network rinkeby
+* Open Console: npx hardhat console --network rinkeby
+* Console: `let d = await (await ethers.getContractFactory('Diamond')).attach('<Diamond address>')`
+* Console: `await d.mint('<Wallet address>', 0)`
+
+
+# Original Readme
 # Diamond-1-Hardhat Implementation
 
 This is a reference implementation for [EIP-2535 Diamond Standard](https://github.com/ethereum/EIPs/issues/2535). To learn about other implementations go here: https://github.com/mudgen/diamond
@@ -32,7 +57,7 @@ npx hardhat run scripts/deploy.js
 1. Facets are deployed.
 1. The diamond is upgraded. The `diamondCut` function is used to add functions from facets to the diamond. In addition the `diamondCut` function calls the `init` function from the `DiamondInit` contract using `delegatecall` to initialize state variables.
 
-How a diamond is deployed is not part of the EIP-2535 Diamonds standard. This implementation shows a usable example. 
+How a diamond is deployed is not part of the EIP-2535 Diamonds standard. This implementation shows a usable example.
 
 ## Run tests:
 ```console
