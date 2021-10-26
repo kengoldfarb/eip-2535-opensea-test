@@ -74,6 +74,7 @@ abstract contract ERC721Tradable is ContextMixin, ERC721Enumerable, NativeMetaTr
         override
         public
         view
+        virtual
         returns (bool)
     {
         // Whitelist OpenSea proxy contract for easy trading.

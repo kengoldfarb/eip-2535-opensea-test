@@ -34,14 +34,15 @@ contract DiamondInit {
         ds.supportedInterfaces[type(IERC173).interfaceId] = true;
         ds.supportedInterfaces[type(IERC721).interfaceId] = true;
 
-        s.name = "DiamondOpenSeaTest";
-        s.symbol = "DSEA";
-
         // add your own state variables
         // EIP-2535 specifies that the `diamondCut` function takes two optional
         // arguments: address _init and bytes calldata _calldata
         // These arguments are used to execute an arbitrary function using delegatecall
         // in order to set state variables in the diamond during deployment or an upgrade
         // More info here: https://eips.ethereum.org/EIPS/eip-2535#diamond-interface
+        s.name = "DiamondOpenSeaTest";
+        s.symbol = "DSEA";
+        // Opensea Rinkeby address
+        s.proxyRegistryAddress = 0xF57B2c51dED3A29e6891aba85459d600256Cf317;
     }
 }

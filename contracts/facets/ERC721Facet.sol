@@ -1,20 +1,24 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.1;
 
-import {ERC721} from '@openzeppelin/contracts/token/ERC721/ERC721.sol';
-import {ERC721Enumerable} from '@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol';
+import {AppStorage, LibAppStorage} from '../libraries/LibAppStorage.sol';
+import {LibDiamond} from '../libraries/LibDiamond.sol';
+import '../interfaces/ERC721Tradable.sol';
 
-contract ERC721Facet is ERC721, ERC721Enumerable {
-	// AppStorage internal s;
+contract ERC721Facet is ERC721Tradable {
+    constructor() ERC721Tradable('DiamondOpenSeaTest', 'DSEA', 0xF57B2c51dED3A29e6891aba85459d600256Cf317) {}
 
-    constructor() ERC721('DiamondOpenSeaTest', 'DSEA') {}
-
-	function _beforeTokenTransfer(address from, address to, uint256 tokenId) internal override(ERC721, ERC721Enumerable) {
-        super._beforeTokenTransfer(from, to, tokenId);
+    function getProxyRegistryAddress() public view returns (address) {
+        AppStorage storage s = LibAppStorage.diamondStorage();
+        return s.proxyRegistryAddress;
     }
 
-    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721, ERC721Enumerable) returns (bool) {
-        return super.supportsInterface(interfaceId);
+    function baseTokenURI() override public pure returns (string memory) {
+        return "https://creatures-api.opensea.io/api/creature/";
+    }
+
+    function contractURI() public pure returns (string memory) {
+        return "https://creatures-api.opensea.io/contract/opensea-creatures";
     }
 
     function mint(
@@ -24,7 +28,43 @@ contract ERC721Facet is ERC721, ERC721Enumerable {
         super._safeMint(to, tokenId);
     }
 
-    function _baseURI() internal view virtual override returns (string memory) {
-        return "https://meem.wtf/tokens/";
+    /**
+     * @dev See {IERC721Metadata-name}.
+     */
+    function name() public view virtual override returns (string memory) {
+        AppStorage storage s = LibAppStorage.diamondStorage();
+        return s.name;
+    }
+
+    /**
+     * @dev See {IERC721Metadata-symbol}.
+     */
+    function symbol() public view virtual override returns (string memory) {
+        AppStorage storage s = LibAppStorage.diamondStorage();
+        return s.symbol;
+    }
+
+    function owner() public view override returns (address) {
+        return LibDiamond.contractOwner();
+    }
+
+    /**
+     * Override isApprovedForAll to whitelist user's OpenSea proxy accounts to enable gas-less listings.
+     */
+    function isApprovedForAll(address _owner, address operator)
+        override
+        public
+        view
+        virtual
+        returns (bool)
+    {
+        AppStorage storage s = LibAppStorage.diamondStorage();
+        // Whitelist OpenSea proxy contract for easy trading.
+        ProxyRegistry proxyRegistry = ProxyRegistry(s.proxyRegistryAddress);
+        if (address(proxyRegistry.proxies(_owner)) == operator) {
+            return true;
+        }
+
+        return super.isApprovedForAll(_owner, operator);
     }
 }

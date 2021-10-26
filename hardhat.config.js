@@ -38,6 +38,7 @@ module.exports = {
       }
     }
   },
+  defaultNetwork: 'local',
   networks: {
     rinkeby: {
 			url: `https://rinkeby.infura.io/v3/${process.env.INFURA_PROJECT_ID}`,
@@ -48,11 +49,16 @@ module.exports = {
     mumbai: {
 			url: 'https://rpc-mumbai.maticvigil.com',
 			chainId: 80001,
-			gasPrice: 10000000000,
 			accounts: process.env.TESTNET_MNEMONIC
 				? { mnemonic: process.env.TESTNET_MNEMONIC }
 				: [process.env.TESTNET_WALLET_PRIVATE_KEY].filter(Boolean)
 		},
+    local: {
+			url: 'http://127.0.0.1:8545',
+			accounts: process.env.LOCAL_MNEMONIC
+				? { mnemonic: process.env.LOCAL_MNEMONIC }
+				: [process.env.LOCAL_WALLET_PRIVATE_KEY].filter(Boolean)
+		}
   },
   etherscan: {
 		apiKey: process.env.ETHERSCAN_API_KEY

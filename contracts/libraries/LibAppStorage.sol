@@ -10,6 +10,8 @@ struct AppStorage {
     // Token symbol
     string symbol;
 
+	address proxyRegistryAddress;
+
     // Mapping from token ID to owner address
     mapping(uint256 => address) owners;
 

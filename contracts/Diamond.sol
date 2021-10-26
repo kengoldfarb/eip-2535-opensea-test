@@ -12,11 +12,11 @@ import { LibDiamond } from "./libraries/LibDiamond.sol";
 import { IDiamondCut } from "./interfaces/IDiamondCut.sol";
 // import {ERC721} from '@openzeppelin/contracts/token/ERC721/ERC721.sol';
 // import {ERC721Enumerable} from '@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol';
-import {ERC721Tradable} from './interfaces/ERC721Tradable.sol';
+import {ERC721Facet} from './facets/ERC721Facet.sol';
 
-contract Diamond is ERC721Tradable {
+contract Diamond is ERC721Facet {
 
-    constructor(address _contractOwner, address _diamondCutFacet) payable ERC721Tradable('DiamondOpenSeaTest', 'DSEA', 0xF57B2c51dED3A29e6891aba85459d600256Cf317) {
+    constructor(address _contractOwner, address _diamondCutFacet) payable {
         LibDiamond.setContractOwner(_contractOwner);
 
         // Add the diamondCut external function from the diamondCutFacet
@@ -72,18 +72,18 @@ contract Diamond is ERC721Tradable {
     //     return super.supportsInterface(interfaceId);
     // }
 
-    function baseTokenURI() override public pure returns (string memory) {
-        return "https://creatures-api.opensea.io/api/creature/";
-    }
+    // function baseTokenURI() override public pure returns (string memory) {
+    //     return "https://creatures-api.opensea.io/api/creature/";
+    // }
 
-    function contractURI() public pure returns (string memory) {
-        return "https://creatures-api.opensea.io/contract/opensea-creatures";
-    }
+    // function contractURI() public pure returns (string memory) {
+    //     return "https://creatures-api.opensea.io/contract/opensea-creatures";
+    // }
 
-    function mint(
-		address to,
-        uint256 tokenId
-	) public {
-        super._safeMint(to, tokenId);
-    }
+    // function mint(
+	// 	address to,
+    //     uint256 tokenId
+	// ) public {
+    //     super._safeMint(to, tokenId);
+    // }
 }
