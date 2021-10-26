@@ -130,6 +130,7 @@ export TESTNET_WALLET_PRIVATE_KEY = ...
 * Deploy contracts: npx hardhat deploy --network rinkeby
 * Open Console: npx hardhat console --network rinkeby
 * Console: `let d = await (await ethers.getContractFactory('Diamond')).attach('<Diamond address>')`
+  * OR if testing w/ facets...Console: `let d = await (await ethers.getContractFactory('ERC721Facet')).attach('<Diamond address>')`
 * Console: `await d.mint('<Wallet address>', 0)`
 * Import collection into Opensea: [https://testnets.opensea.io/get-listed/step-two](https://testnets.opensea.io/get-listed/step-two)
 
